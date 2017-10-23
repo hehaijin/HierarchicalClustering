@@ -5,21 +5,23 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
+#to hierarchical clustering with Eucledean distance.
+#cluster distance is average distance
+#agglomerative algorithm
+
 
 
 #to implement a hierarchical cluster algorithm
 
-#datapoint is a list of numbers
-
-#node
-
+#check if a point is in an list of points
 def pointIn(p, ps):
 	result=False
 	for i in range(len(ps)):
 		if ps[i].index==p.index:
 			result=True
 	return result
-	
+#find the index	of a poinnt in a list of list of points
+#garranteed to be there
 def getIndex(p,clusters):
 	index=0
 	for i in range(len(clusters)):
@@ -27,6 +29,7 @@ def getIndex(p,clusters):
 			index=i
 	return index	
 
+#distance of 2 points
 def distance(pa, pb):
 	#a and b are data points
 	d=0
@@ -38,7 +41,7 @@ def distance(pa, pb):
 	return d
 		
 
-
+#distance of 2 cluster of points
 def nodeDistance(na, nb):
 		#use mean distance as meansure of distance between clusters
 		lena=len(na.points)
@@ -51,26 +54,26 @@ def nodeDistance(na, nb):
 				dist=dist+distance(na.points[i],nb.points[j])
 		dist=dist/(lena*lenb)
 		return dist
-		
+#represents a data point		
 class Point():
 	def __init__(self, index, data, label):
 		self.index=index #as a indexing id for data point
 		self.data=data
 		self.label=label
-
+#represents a clustering node
 class Node():
 	def __init__(self,points,step):
 		self.points=points #a list of datapoints
 		self.step=step
 		self.edges=[]
 
-#tree
+#class to do hierarchial clustering
 class HierarchyCluster():
 	def __init__(self):
-		self.nodes=[]
-		clusters=[]
-		self.allpoints=[]
-		self.givenClusters=[]
+		#self.nodes=[]
+		clusters=[]   #current nodes during calculation
+		self.allpoints=[]  #holds all data points
+		self.givenClusters=[] #calculate based on label 
 		for i in range(4):
 			self.givenClusters.append([])
 		data=readData()
@@ -78,7 +81,7 @@ class HierarchyCluster():
 		print("the dimension of data is")
 		print(dimension)
 		for i in range(len(data)):
-			if i%100==0:
+			if np.random.rand()<=0.01:  #randomly get about 400 samples
 				p=Point(i,data[i][1:],data[i][0])
 				self.allpoints.append(p)
 				self.givenClusters[int(data[i][0])-1].append(p)
@@ -151,7 +154,7 @@ class HierarchyCluster():
 		#n is the number of clusters
 	
 
-	#calculate number of indexes
+	#calculate Rand Index
 	def randIndex(self,clusters):
 		print("cluster has "+str(len(clusters)))
 		print("given clusters has "+str(len(self.givenClusters)))
@@ -190,11 +193,16 @@ def readData():
 	
 	
 
+
+
+
+
+#the executing body
 			
 g=HierarchyCluster()
 ris=[]
 for i in range(2,10):
-	c1=g.generateClusters(i)
+	c1=g.generateClusters(i)  
 	ri=g.randIndex(c1)
 	ris.append(ri)
 
