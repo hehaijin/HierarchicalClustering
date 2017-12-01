@@ -195,23 +195,27 @@ def readData():
 
 
 
-
+def main():
 
 #the executing body
-			
-g=HierarchyCluster()
-ris=[]
-for i in range(2,10):
-	c1=g.generateClusters(i)  
-	ri=g.randIndex(c1)
-	ris.append(ri)
+				
+	g=HierarchyCluster()
+	ris=[]
+	for i in range(2,10):
+		c1=g.generateClusters(i)  
+		ri=g.randIndex(c1)
+		ris.append(ri)
 
-plt.plot(range(2,10), ris)
-plt.title('cluster number vs Rand Index')
-plt.xlabel('cluster number')
-plt.ylabel('Rand Index')
-plt.grid(True)
-plt.show()
+	plt.plot(range(2,10), ris)
+	plt.title('cluster number vs Rand Index')
+	plt.xlabel('cluster number')
+	plt.ylabel('Rand Index')
+	plt.grid(True)
+	plt.show()
+
+
+if __name__=='__main__':
+	main()
  
 
 
